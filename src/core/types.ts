@@ -1,3 +1,5 @@
+import type { ErrorKind } from '../api/classifyError';
+
 export type RawLanguage = {
   name: string;
 };
@@ -40,3 +42,10 @@ export type Country = {
   languages: string[];
   currencies: string[];
 };
+
+export type SearchState =
+  | { status: 'idle' }
+  | { status: 'loading'; query: string }
+  | { status: 'success'; query: string; countries: Country[] }
+  | { status: 'not-found'; query: string }
+  | { status: 'error'; query: string; errorKind: ErrorKind };
