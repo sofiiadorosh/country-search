@@ -1,0 +1,33 @@
+{
+  "name": "country-search",
+  "version": "1.0.0",
+  "description": "A live country search app that queries the public countries.dev API by name as the user types, showing matching countries in real time.",
+  "keywords": [
+    "javascript",
+    "typescript",
+    "fetch",
+    "promise",
+    "async/await",
+    "abortcontroller",
+    "debounce",
+    "error handling",
+    "tdd",
+    "first",
+    "jest",
+    "eslint",
+    "prettier",
+    "husky"
+  ],
+  "homepage": "https://github.com/sofiiadorosh/country-search#readme",
+  "bugs": {
+    "url": "https://github.com/sofiiadorosh/country-search/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sofiiadorosh/country-search.git"
+  },
+  "author": "Sofiia Dorosh",
+  "license": "ISC",
+  "type": "module",
+  "scripts": {}
+}
