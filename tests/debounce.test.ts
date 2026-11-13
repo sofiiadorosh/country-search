@@ -1,4 +1,4 @@
-import { debounce } from '../src/utils/debounce';
+import { debounce } from '../src/core/debounce';
 
 const DELAY = 300;
 
