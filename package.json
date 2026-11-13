@@ -29,5 +29,13 @@
   "author": "Sofiia Dorosh",
   "license": "ISC",
   "type": "module",
-  "scripts": {}
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "~6.0.3",
+    "vite": "^8.3.8"
+  }
 }
