@@ -1,27 +1,18 @@
 import { searchCountries } from '../api/searchCountries';
 import { createCachedSearch } from '../core/createCachedSearch';
 import { createSearchController } from '../core/createSearchController';
+import { addToHistory } from '../core/searchHistory';
 import type { SearchState } from '../core/types';
+import { loadHistory, saveHistory } from '../storage/historyStorage';
 import { createCountryDetails } from './countryDetails';
 import { createElement } from './dom';
 import { createSearchField } from './searchField';
+import { createSearchHistory } from './searchHistory';
 import { renderSearchState } from './searchResults';
 
-const createHeader = (onInput: (value: string) => void): HTMLElement =>
-  createElement('header', {
-    className: 'header',
-    children: [
-      createElement('div', {
-        className: 'container header__container',
-        children: [
-          createElement('h1', { className: 'logo', text: 'Country Search' }),
-          createSearchField(onInput),
-        ],
-      }),
-    ],
-  });
-
 export const startApp = (root: HTMLElement): void => {
+  let history: readonly string[] = loadHistory();
+
   const resultsContainer = createElement('div', {
     className: 'container',
     attrs: { 'aria-live': 'polite' },
@@ -33,7 +24,17 @@ export const startApp = (root: HTMLElement): void => {
   });
   const details = createCountryDetails();
 
+  const rememberQuery = (query: string): void => {
+    history = addToHistory(history, query);
+    saveHistory(history);
+    historyView.render(history);
+  };
+
   const render = (state: SearchState): void => {
+    if (state.status === 'success') {
+      rememberQuery(state.query);
+    }
+
     resultsContainer.replaceChildren(
       renderSearchState(state, {
         onRetry: () => controller.retry(),
@@ -47,7 +48,29 @@ export const startApp = (root: HTMLElement): void => {
     onStateChange: render,
   });
 
-  root.append(createHeader(controller.setQuery), results, details.element);
+  const searchField = createSearchField(controller.setQuery);
 
+  const historyView = createSearchHistory((query) => {
+    searchField.setValue(query);
+    controller.searchNow(query);
+  });
+
+  const header = createElement('header', {
+    className: 'header',
+    children: [
+      createElement('div', {
+        className: 'container header__container',
+        children: [
+          createElement('h1', { className: 'logo', text: 'Country Search' }),
+          searchField.element,
+          historyView.element,
+        ],
+      }),
+    ],
+  });
+
+  root.append(header, results, details.element);
+
+  historyView.render(history);
   render(controller.getState());
 };

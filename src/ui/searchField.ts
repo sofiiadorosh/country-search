@@ -1,8 +1,13 @@
 import { createElement } from './dom';
 
+type SearchField = {
+  element: HTMLElement;
+  setValue: (value: string) => void;
+};
+
 export const createSearchField = (
   onInput: (value: string) => void,
-): HTMLElement => {
+): SearchField => {
   const input = createElement('input', {
     className: 'search-field__input',
     attrs: {
@@ -16,7 +21,7 @@ export const createSearchField = (
 
   input.addEventListener('input', () => onInput(input.value));
 
-  return createElement('div', {
+  const element = createElement('div', {
     className: 'search-field',
     children: [
       createElement('label', {
@@ -36,4 +41,10 @@ export const createSearchField = (
       }),
     ],
   });
+
+  const setValue = (value: string): void => {
+    input.value = value;
+  };
+
+  return { element, setValue };
 };

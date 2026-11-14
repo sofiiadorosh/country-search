@@ -12,6 +12,7 @@ type SearchControllerOptions = {
 
 export type SearchController = {
   setQuery: (input: string) => void;
+  searchNow: (input: string) => void;
   retry: () => void;
   getState: () => SearchState;
 };
@@ -36,7 +37,7 @@ export const createSearchController = ({
   };
 
   const runSearch = async (query: string): Promise<void> => {
-    if (!query) {
+    if (!query || query !== lastQuery) {
       return;
     }
 
@@ -82,6 +83,19 @@ export const createSearchController = ({
     setState(query ? { status: 'loading', query } : { status: 'idle' });
   };
 
+  const searchNow = (input: string): void => {
+    const query = input.trim();
+
+    if (!query) {
+      return;
+    }
+
+    lastQuery = query;
+    abortActiveRequest();
+    setState({ status: 'loading', query });
+    void runSearch(query);
+  };
+
   const retry = (): void => {
     if (!lastQuery) {
       return;
@@ -94,6 +108,7 @@ export const createSearchController = ({
 
   return {
     setQuery,
+    searchNow,
     retry,
     getState: () => state,
   };
