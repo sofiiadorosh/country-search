@@ -1,0 +1,40 @@
+@use 'sass:list';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.tile {
+  overflow: hidden;
+  @include soft-card;
+
+  &__header {
+    padding: 10px 16px;
+    @include label-caps;
+  }
+
+  @each $name, $colors in $tile-themes {
+    &_#{$name} &__header {
+      background: list.nth($colors, 1);
+    }
+  }
+}
+
+.section-label {
+  @include label-caps(14px);
+}
+
+.sticker {
+  padding: 3px 10px;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(20, 33, 61, 0.15);
+  transform: rotate(8deg);
+
+  &_red {
+    color: $ui-white;
+    background: $ui-red;
+  }
+}

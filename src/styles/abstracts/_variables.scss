@@ -1,0 +1,55 @@
+$timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+$mobile-max-width: 560px;
+$container-max-width: 1040px;
+
+$ui-font:
+  'Plus Jakarta Sans',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  sans-serif;
+
+$ui-ink: #14213d;
+$ui-muted: #5b6475;
+$ui-white: #ffffff;
+$ui-divider: #e6e2d9;
+$page-background: #f7f2e8;
+
+$ui-red: #f26b5b;
+$ui-red-surface: #fde4e1;
+$ui-red-border: #ef9a90;
+$ui-mint: #8fdcc0;
+$ui-mint-strong: #5cc7a1;
+
+$tile-themes: (
+  'blue': (
+    #8fc4f5,
+    #dcedfd,
+  ),
+  'orange': (
+    #ffb878,
+    #ffeedd,
+  ),
+  'purple': (
+    #c5b4f3,
+    #eee8fd,
+  ),
+  'yellow': (
+    #ffd766,
+    #fff5d1,
+  ),
+  'green': (
+    #8fdcc0,
+    #def6ed,
+  ),
+  'grey': (
+    #d7d9de,
+    #f1f2f4,
+  ),
+);
+
+$ui-radius: 16px;
+$ui-radius-small: 10px;
+$ui-shadow: 0 8px 24px rgba(20, 33, 61, 0.08);
+$ui-shadow-raised: 0 12px 28px rgba(20, 33, 61, 0.14);

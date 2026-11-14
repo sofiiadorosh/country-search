@@ -1,0 +1,21 @@
+@use '../abstracts/mixins' as *;
+
+.results {
+  padding-bottom: 48px;
+
+  @include mobile {
+    padding-bottom: 28px;
+  }
+
+  &__found {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+  }
+}

@@ -1,0 +1,130 @@
+@use 'sass:list';
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.details {
+  @each $name, $colors in $tile-themes {
+    &.tile_#{$name} {
+      background: list.nth($colors, 2);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__close {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    padding: 0;
+    background: $ui-white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 150ms $timing-function;
+    @include focus-ring;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 14px;
+      height: 2px;
+      background: $ui-ink;
+      border-radius: 1px;
+    }
+
+    &::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        background: $page-background;
+      }
+    }
+  }
+
+  &__body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @include mobile {
+      padding: 18px;
+    }
+  }
+
+  &__hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  &__title {
+    font-size: clamp(28px, 6vw, 40px);
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  &__subtitle {
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  &__flag {
+    width: 96px;
+    height: 64px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: $ui-radius-small;
+    box-shadow: $ui-shadow;
+
+    @include mobile {
+      width: 72px;
+      height: 48px;
+    }
+  }
+
+  &__description {
+    color: $ui-muted;
+  }
+
+  &__widgets {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+  }
+}
+
+.widget {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  @include soft-card(12px);
+
+  &__label {
+    color: $ui-muted;
+    @include label-caps(12px);
+  }
+
+  &__value {
+    margin: 0;
+    font-weight: 700;
+  }
+}

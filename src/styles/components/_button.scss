@@ -1,0 +1,48 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.button {
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 700;
+  color: $ui-white;
+  background: $ui-ink;
+  border: none;
+  border-radius: $ui-radius-small;
+  cursor: pointer;
+  transition: background-color 150ms $timing-function;
+  @include focus-ring($ui-red);
+
+  @media (hover: hover) {
+    &:hover {
+      background: #24365e;
+    }
+  }
+}
+
+.round-button {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: $ui-ink;
+  background: $ui-mint;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 150ms $timing-function;
+  @include focus-ring;
+
+  &::before {
+    content: '→';
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background: $ui-mint-strong;
+    }
+  }
+}

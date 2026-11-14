@@ -1,0 +1,101 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.country-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition:
+    transform 150ms $timing-function,
+    box-shadow 150ms $timing-function;
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: $ui-shadow-raised;
+    }
+  }
+
+  &__body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex-grow: 1;
+  }
+
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__name {
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  &__flag {
+    width: 56px;
+    height: 38px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border: 1px solid $ui-divider;
+    border-radius: 6px;
+  }
+
+  &__facts {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+  }
+
+  &__fact {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  &__label {
+    color: $ui-muted;
+    @include label-caps(12px);
+  }
+
+  &__value {
+    margin: 0;
+    font-weight: 700;
+    text-align: right;
+  }
+
+  &__more {
+    align-self: flex-end;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  &:has(&__more:focus-visible) {
+    outline: 3px solid $ui-ink;
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) {
+    &:hover &__more {
+      background: $ui-mint-strong;
+    }
+  }
+}

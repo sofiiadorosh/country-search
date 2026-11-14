@@ -1,0 +1,35 @@
+[
+  {
+    "flag": "🇸🇯",
+    "name": "Svalbard and Jan Mayen",
+    "flags": {
+      "png": "https://flagcdn.com/w320/sj.png",
+      "svg": "https://flagcdn.com/sj.svg"
+    },
+    "latlng": [78, 20],
+    "region": "Europe",
+    "capital": "Longyearbyen",
+    "demonym": "Norwegian",
+    "languages": [
+      {
+        "name": "Norwegian",
+        "iso639_1": "no",
+        "iso639_2": "nor",
+        "nativeName": "Norsk"
+      }
+    ],
+    "subregion": "Northern Europe",
+    "timezones": ["UTC+01:00"],
+    "alpha2Code": "SJ",
+    "alpha3Code": "SJM",
+    "currencies": [
+      { "code": "NOK", "name": "Norwegian krone", "symbol": "kr" }
+    ],
+    "nativeName": "Svalbard og Jan Mayen",
+    "population": 2562,
+    "independent": false,
+    "numericCode": "744",
+    "callingCodes": ["47"],
+    "topLevelDomain": [".sj"]
+  }
+]
