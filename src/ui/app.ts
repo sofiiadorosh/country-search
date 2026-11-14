@@ -1,3 +1,5 @@
+import { searchCountries } from '../api/searchCountries';
+import { createCachedSearch } from '../core/createCachedSearch';
 import { createSearchController } from '../core/createSearchController';
 import type { SearchState } from '../core/types';
 import { createCountryDetails } from './countryDetails';
@@ -40,7 +42,10 @@ export const startApp = (root: HTMLElement): void => {
     );
   };
 
-  const controller = createSearchController({ onStateChange: render });
+  const controller = createSearchController({
+    search: createCachedSearch(searchCountries),
+    onStateChange: render,
+  });
 
   root.append(createHeader(controller.setQuery), results, details.element);
 

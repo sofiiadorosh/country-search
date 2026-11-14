@@ -51,3 +51,8 @@ export type SearchState =
   | { status: 'error'; query: string; errorKind: VisibleErrorKind };
 
 export type VisibleErrorKind = Exclude<ErrorKind, 'abort'>;
+
+export type SearchFn = (
+  query: string,
+  signal: AbortSignal,
+) => Promise<Country[]>;

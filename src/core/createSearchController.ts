@@ -2,9 +2,7 @@ import { classifyError } from '../api/classifyError';
 import { searchCountries } from '../api/searchCountries';
 import { DEBOUNCE_DELAY_MS } from './constants';
 import { debounce } from './debounce';
-import type { Country, SearchState } from './types';
-
-type SearchFn = (query: string, signal: AbortSignal) => Promise<Country[]>;
+import type { SearchFn, SearchState } from './types';
 
 type SearchControllerOptions = {
   search?: SearchFn;
