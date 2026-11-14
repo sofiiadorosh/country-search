@@ -48,4 +48,6 @@ export type SearchState =
   | { status: 'loading'; query: string }
   | { status: 'success'; query: string; countries: Country[] }
   | { status: 'not-found'; query: string }
-  | { status: 'error'; query: string; errorKind: ErrorKind };
+  | { status: 'error'; query: string; errorKind: VisibleErrorKind };
+
+export type VisibleErrorKind = Exclude<ErrorKind, 'abort'>;

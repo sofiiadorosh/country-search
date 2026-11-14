@@ -1,0 +1,78 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.message {
+  &__body {
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  &__hint {
+    color: $ui-muted;
+  }
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #eee8fd;
+  border-top-color: #8f75e6;
+  border-radius: 50%;
+  animation: spin 800ms linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: 2400ms;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.alert {
+  padding: 16px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  background: $ui-red-surface;
+  border: 1.5px solid $ui-red-border;
+  border-radius: 12px;
+
+  &__icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    font-weight: 800;
+    color: $ui-white;
+    background: $ui-red;
+    border-radius: 8px;
+    transform: rotate(-6deg);
+  }
+
+  &__text {
+    flex: 1 1 220px;
+  }
+
+  &__title {
+    font-weight: 700;
+    color: #b8392b;
+  }
+
+  &__hint {
+    color: $ui-muted;
+  }
+}
