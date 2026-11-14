@@ -309,4 +309,95 @@ describe('createSearchController', () => {
       expect(controller.getState()).toEqual({ status: 'idle' });
     });
   });
+  describe('searchNow', () => {
+    it('searches immediately without waiting for the debounce delay', async () => {
+      const search: SearchMock = jest.fn().mockResolvedValue(spain);
+      const controller = setup(search);
+
+      controller.searchNow('spain');
+      await jest.advanceTimersByTimeAsync(0);
+
+      expect(search).toHaveBeenCalledTimes(1);
+      expect(search).toHaveBeenCalledWith('spain', expect.any(AbortSignal));
+      expect(controller.getState()).toEqual({
+        status: 'success',
+        query: 'spain',
+        countries: spain,
+      });
+    });
+
+    it('shows loading right away', () => {
+      const controller = setup(jest.fn(pendingUntilAborted));
+
+      controller.searchNow('spain');
+
+      expect(controller.getState()).toEqual({
+        status: 'loading',
+        query: 'spain',
+      });
+    });
+
+    it('trims the query', async () => {
+      const search: SearchMock = jest.fn(pendingUntilAborted);
+      const controller = setup(search);
+
+      controller.searchNow('  spain  ');
+      await jest.advanceTimersByTimeAsync(0);
+
+      expect(search).toHaveBeenCalledWith('spain', expect.any(AbortSignal));
+    });
+
+    it('aborts the active request', async () => {
+      const search: SearchMock = jest.fn(pendingUntilAborted);
+      const controller = setup(search);
+
+      controller.setQuery('sp');
+      await jest.advanceTimersByTimeAsync(DELAY);
+      controller.searchNow('spain');
+
+      expect(signalOfCall(search, 0).aborted).toBe(true);
+    });
+
+    it('cancels a pending debounced search', async () => {
+      const search: SearchMock = jest.fn(pendingUntilAborted);
+      const controller = setup(search);
+
+      controller.setQuery('sp');
+      controller.searchNow('spain');
+      await jest.advanceTimersByTimeAsync(DELAY);
+
+      expect(search).toHaveBeenCalledTimes(1);
+      expect(search).toHaveBeenCalledWith('spain', expect.any(AbortSignal));
+    });
+
+    it('becomes the query that retry repeats', async () => {
+      const search: SearchMock = jest
+        .fn()
+        .mockRejectedValueOnce(new HttpError(500))
+        .mockResolvedValueOnce(spain);
+      const controller = setup(search);
+
+      controller.searchNow('spain');
+      await jest.advanceTimersByTimeAsync(0);
+      controller.retry();
+      await jest.advanceTimersByTimeAsync(0);
+
+      expect(search).toHaveBeenLastCalledWith('spain', expect.any(AbortSignal));
+      expect(controller.getState().status).toBe('success');
+    });
+
+    it.each(['', '   '])(
+      'does nothing for an empty query %p',
+      async (query) => {
+        const search: SearchMock = jest.fn();
+        const controller = setup(search);
+
+        controller.searchNow(query);
+        await jest.advanceTimersByTimeAsync(DELAY);
+
+        expect(search).not.toHaveBeenCalled();
+        expect(controller.getState()).toEqual({ status: 'idle' });
+      },
+    );
+  });
 });
